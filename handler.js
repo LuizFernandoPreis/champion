@@ -36,4 +36,6 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.listen(1337, () => console.log("Server running on http://localhost:1337"));
+app.listen(1337, "0.0.0.0", () => {
+  console.log("Server running on http://0.0.0.0:1337");
+});
