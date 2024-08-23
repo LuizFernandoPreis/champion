@@ -25,7 +25,7 @@ async function creativeTimer() {
   let data = getFormattedDate();
   try {
     const channel = await client.channels.fetch("1004519188209086467");
-    const apiUrl = `http://localhost:1337/?filterValue=${data}`;
+    const apiUrl = `http://92.113.34.132:1337/?filterValue=${data}`;
 
     const response = await axios.get(apiUrl);
 
