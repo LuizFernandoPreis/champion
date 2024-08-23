@@ -3,7 +3,7 @@ const axios = require("axios");
 
 const config = {
   token:
-    "MTI3NTk0MjMzMTYxODQzMTA0OQ.GgqvD-.rHzmHG1UrSOULKjHMiWC8fTJrbvZK72RYVJCis",
+    "MTI3NTk0MjMzMTYxODQzMTA0OQ.GYSg6M.MX42RJyqut7qEcajJDJ5H7sDKfR59kaTG-9xsY",
   clientId: "1275942331618431049",
 };
 
