@@ -1,9 +1,10 @@
 const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
 const axios = require("axios");
+require("dotenv").config();
 
+const token = process.env.TOKEN;
 const config = {
-  token:
-    "MTI3NTk0MjMzMTYxODQzMTA0OQ.GYSg6M.MX42RJyqut7qEcajJDJ5H7sDKfR59kaTG-9xsY",
+  token: token,
   clientId: "1275942331618431049",
 };
 
