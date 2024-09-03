@@ -11,7 +11,7 @@ const config = {
 const getFormattedDate = () => {
   const date = new Date();
   const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
 
   return `${day}/${month}`;
@@ -24,8 +24,8 @@ const client = new Client({
 async function creativeTimer() {
   let data = getFormattedDate();
   try {
-    const channel = await client.channels.fetch("1004519188209086467");
-    const apiUrl = `http://92.113.34.132:1337/?filterValue=${data}`;
+    const channel = await client.channels.fetch("1280353921826553927");
+    const apiUrl = `http://localhost:1337/?filterValue=${data}`;
 
     const response = await axios.get(apiUrl);
 
@@ -52,21 +52,58 @@ async function creativeTimer() {
 
       await channel.send({ embeds: [embed] });
     } else {
-      channel.send("No data found.");
     }
   } catch (error) {
     console.error("Error fetching data or sending message:", error);
-    const channel = await client.channels.fetch("1004519188209086467");
+    const channel = await client.channels.fetch("1280353921826553927");
     channel.send("An error occurred while fetching data.");
   }
 }
 
+
+async function onUpdate() {
+  const channel = await client.channels.fetch("1280353921826553927");
+  const apiUrl = `http://localhost:1337/pronto`;
+  const response = await axios.get(apiUrl);
+
+  if (response.data && response.data.length > 0) {
+    const embed = new EmbedBuilder()
+      .setTitle("🚨Atualização!🚨")
+      .setColor("#0099ff")
+      .setTimestamp();
+
+    response.data.forEach((row) => {
+      embed.addFields({
+        name: `Cliente: ${row[0]}`,
+        value: `Teve seu status mudado para "${row[9]}"
+        Copy: ${row[11]}
+        Entrega Rápida: ${row[4]}`,
+        inline: false,
+      });
+      console.log(row[7]);
+    });
+
+    await channel.send({ embeds: [embed] });
+  } else {
+  }
+}
+
+
+
+
 client.once("ready", async () => {
   console.log("Bot is ready!");
   creativeTimer();
+
+  // Intervalo diário
   setInterval(() => {
     creativeTimer();
   }, 43200000);
+
+  // verifica atualização
+  setInterval(() => {
+    onUpdate();
+  }, 10000);
 });
 
 client.login(config.token);
