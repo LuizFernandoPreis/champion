@@ -43,14 +43,12 @@ async function onUpdate() {
 
     const rows = response.data.values;
 
-    let filteredRows = rows.filter(
-      (row) => row[15] != "1"
-    );
+    let filteredRows = rows.filter((row) => row[15] != "1");
 
     for (let i = 0; i < rows.length; i++) {
       let atual = rows[i];
       if (atual[15] != "1") {
-        await setValue(i + 1); 
+        await setValue(i + 1);
       }
     }
 
@@ -82,7 +80,7 @@ app.get("/", async (req, res) => {
     const rows = response.data.values;
 
     let filteredRows = rows.filter(
-      (row) => row[2] === filterValue && row[9] != "Pronto"
+      (row) => row[3] === filterValue && row[9] != "Pronto"
     );
 
     res.json(filteredRows);

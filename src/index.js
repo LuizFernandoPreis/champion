@@ -24,11 +24,11 @@ const client = new Client({
 async function creativeTimer() {
   let data = getFormattedDate();
   try {
-    const channel = await client.channels.fetch("1280353921826553927");
-    const apiUrl = `http://localhost:1337/?filterValue=${data}`;
+    const channel = await client.channels.fetch("1004519188209086467");
+    const apiUrl = `http://92.113.34.132:1337/?filterValue=${data}`;
 
     const response = await axios.get(apiUrl);
-
+    console.log(response.data);
     if (response.data && response.data.length > 0) {
       const embed = new EmbedBuilder()
         .setTitle("🚨Prioridades do dia!🚨")
@@ -38,12 +38,12 @@ async function creativeTimer() {
       response.data.forEach((row) => {
         embed.addFields({
           name: `Nome: ${row[0]}`,
-          value: `WhatsApp: [Link](https://wa.me/${row[1]})
-          Data: ${row[2]}
-          Status: ${row[8]}
-          Documento: [Link](${row[6]})
-          Responsável: ${row[7]}
-          Link do Drive: [Link](${row[9]})
+          value: `WhatsApp: [Link](https://wa.me/${row[2]})
+          Data: ${row[3]}
+          Status copy: ${row[6]}
+          Status edição: ${row[9]}
+          Documento: [Link](${row[7]})
+          Responsável: ${row[5]}
           Criativos: ${row[10]}`,
           inline: false,
         });
@@ -55,15 +55,14 @@ async function creativeTimer() {
     }
   } catch (error) {
     console.error("Error fetching data or sending message:", error);
-    const channel = await client.channels.fetch("1280353921826553927");
+    const channel = await client.channels.fetch("1004519188209086467");
     channel.send("An error occurred while fetching data.");
   }
 }
 
-
 async function onUpdate() {
-  const channel = await client.channels.fetch("1280353921826553927");
-  const apiUrl = `http://localhost:1337/pronto`;
+  const channel = await client.channels.fetch("1004519188209086467");
+  const apiUrl = `http://92.113.34.132:1337/pronto`;
   const response = await axios.get(apiUrl);
 
   if (response.data && response.data.length > 0) {
@@ -75,9 +74,10 @@ async function onUpdate() {
     response.data.forEach((row) => {
       embed.addFields({
         name: `Cliente: ${row[0]}`,
-        value: `Teve seu status mudado para "${row[9]}"
-        Copy: ${row[11]}
-        Entrega Rápida: ${row[4]}`,
+        value: `Status de edição: "${row[9]}"
+        Status da copy: "${row[6]}"
+      Copy: ${row[11]}
+      Entrega Rápida: ${row[4]}`,
         inline: false,
       });
       console.log(row[7]);
@@ -87,9 +87,6 @@ async function onUpdate() {
   } else {
   }
 }
-
-
-
 
 client.once("ready", async () => {
   console.log("Bot is ready!");
