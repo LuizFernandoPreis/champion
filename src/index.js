@@ -24,7 +24,7 @@ const client = new Client({
 async function creativeTimer() {
   let data = getFormattedDate();
   try {
-    const channel = await client.channels.fetch("1004519188209086467");
+    const channel = await client.channels.fetch("1280353921826553927");
     const apiUrl = `http://92.113.34.132:1337/?filterValue=${data}`;
 
     const response = await axios.get(apiUrl);
@@ -55,13 +55,13 @@ async function creativeTimer() {
     }
   } catch (error) {
     console.error("Error fetching data or sending message:", error);
-    const channel = await client.channels.fetch("1004519188209086467");
+    const channel = await client.channels.fetch("1280353921826553927");
     channel.send("An error occurred while fetching data.");
   }
 }
 
 async function onUpdate() {
-  const channel = await client.channels.fetch("1004519188209086467");
+  const channel = await client.channels.fetch("1280353921826553927");
   const apiUrl = `http://92.113.34.132:1337/pronto`;
   const response = await axios.get(apiUrl);
 
