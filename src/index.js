@@ -67,16 +67,23 @@ async function onUpdate() {
 
   if (response.data && response.data.length > 0) {
     const embed = new EmbedBuilder()
+
       .setTitle("🚨Atualização!🚨")
       .setColor("#0099ff")
       .setTimestamp();
 
     response.data.forEach((row) => {
+      if (row[9] == "Pronto") {
+        embed.setTitle("🚨Pronto para Envio!🚨");
+        console.log("entrou");
+      }
+
       embed.addFields({
         name: `Cliente: ${row[0]}`,
         value: `Status de edição: "${row[9]}"
         Status da copy: "${row[6]}"
       Copy: ${row[11]}
+      Prazo: ${row[3]}
       Entrega Rápida: ${row[4]}`,
         inline: false,
       });
