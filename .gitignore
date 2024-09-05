@@ -1,3 +1,4 @@
 node_modules
 .env
 discord.json
+credentials.json
