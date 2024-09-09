@@ -16,7 +16,7 @@ async function setValue(index) {
 
   await googleSheets.spreadsheets.values.update({
     spreadsheetId,
-    range: `Sheet1!P${index}:P${index}`,
+    range: `Sheet1!Z${index}:Z${index}`,
     valueInputOption: "USER_ENTERED",
     resource: {
       values: [["1"]],
@@ -43,11 +43,11 @@ async function onUpdate() {
 
     const rows = response.data.values;
 
-    let filteredRows = rows.filter((row) => row[15] != "1");
+    let filteredRows = rows.filter((row) => row[25] != "1");
 
     for (let i = 0; i < rows.length; i++) {
       let atual = rows[i];
-      if (atual[15] != "1") {
+      if (atual[25] != "1") {
         await setValue(i + 1);
       }
     }
@@ -57,6 +57,38 @@ async function onUpdate() {
     console.error(error);
   }
 }
+
+async function getColunas() {
+  const auth = new google.auth.GoogleAuth({
+    keyFile: "credentials.json",
+    scopes: "https://www.googleapis.com/auth/spreadsheets",
+  });
+
+  try {
+    const client = await auth.getClient();
+    const googleSheets = google.sheets({ version: "v4", auth: client });
+    const spreadsheetId = "1082yiGlZI6bEV2SUZCc9yKUhAwEqs84L-zPj_-RUkTg";
+
+    const range = `Painel`;
+    const response = await googleSheets.spreadsheets.values.get({
+      spreadsheetId,
+      range,
+    });
+
+    const rows = response.data.values;
+    let json = {};
+
+    for(let i = 0; i < rows[0].length; i++){
+      json[rows[0][i]] = rows[1][i]
+    }
+
+    return json;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
 
 app.get("/", async (req, res) => {
   const { filterValue } = req.query;
@@ -80,7 +112,7 @@ app.get("/", async (req, res) => {
     const rows = response.data.values;
 
     let filteredRows = rows.filter(
-      (row) => row[3] === filterValue && row[9] != "Pronto"
+      (row) => row[4] === filterValue && row[9] != "Pronto"
     );
 
     res.json(filteredRows);
@@ -92,6 +124,11 @@ app.get("/", async (req, res) => {
 
 app.get("/pronto", async (req, res) => {
   const data = await onUpdate();
+  res.json(data);
+});
+
+app.get("/colunas", async (req, res) => {
+  const data = await getColunas();
   res.json(data);
 });
 
