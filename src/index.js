@@ -96,13 +96,11 @@ async function creativeTimer() {
       response.data.forEach((row) => {
         embed.addFields({
           name: `Nome: ${row[cliente]}`,
-          value: `WhatsApp: [Link](https://wa.me/${row[num]})
+          value: `
           Data: ${row[prazo]}
           Status copy: ${row[copyStatus]}
           Status edição: ${row[editStatus]}
-          Documento: [Link](${row[linkCopy]})
-          Responsável: ${row[copywriter]}
-          Criativos: ${row[criativos]}`,
+          Demanda: ${row[criativos]}`,
           inline: false,
         });
       });
