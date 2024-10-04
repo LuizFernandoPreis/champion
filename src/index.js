@@ -34,7 +34,7 @@ const client = new Client({
 // FUNÇÃO QUE RETORNA INDEX DAS COLUNAS //
 //--------------------------------------//
 async function getColunas() {
-  let colunas = await axios.get("http://localhost:1337/colunas");
+  let colunas = await axios.get("http://92.113.34.132:1337/colunas");
   colunas = colunas.data;
 
   const cliente = colunas["Cliente"] - 1;
@@ -42,7 +42,7 @@ async function getColunas() {
   const copyStatus = colunas["Copy Status"] - 1;
   const editStatus = colunas["Edição Status"] - 1;
   const linkCopy = colunas["Link Da Copy"] - 1;
-  const criativos = colunas["Criativos"] - 1;
+  const criativos = colunas["Copy"] - 1;
   const linkCriativo = colunas["Link Dos criativos"] - 1;
   const copywriter = colunas["Copywriter"] - 1;
   const editor = colunas["Editor"] - 1;
@@ -71,7 +71,7 @@ async function creativeTimer() {
   let data = getFormattedDate();
   try {
     const channel = await client.channels.fetch(canalProducao);
-    const apiUrl = `http://localhost:1337/?filterValue=${data}`;
+    const apiUrl = `http://92.113.34.132:1337/?filterValue=${data}`;
 
     const response = await axios.get(apiUrl);
 
@@ -122,7 +122,7 @@ async function creativeTimer() {
 //-----------------------------------//
 async function onUpdate() {
   const channel = await client.channels.fetch(canalProducao);
-  const apiUrl = `http://localhost:1337`;
+  const apiUrl = `http://92.113.34.132:1337`;
   const response = await axios.get(apiUrl + "/pronto");
 
   const {
@@ -153,7 +153,7 @@ async function onUpdate() {
         name: `Cliente: ${row[cliente]}`,
         value: `Status de edição: "${row[editStatus]}"
         Status da copy: "${row[copyStatus]}"
-      Copy: ${row[criativos]}
+      Demanda: ${row[criativos]}
       Prazo: ${row[prazo]}
       Entrega Rápida: ${row[entrega]}`,
         inline: false,
